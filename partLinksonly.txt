@@ -1,0 +1,9 @@
+﻿var links = document.getElementsByTagName("a");
+
+
+for (var i = 0, l = links.length; i < l; i++) {
+        var link = links[i];
+        if (link.href.match(/^http:\/\/pouexam\.edu\.np\/wp-content\/uploads\/2024\/06\/BCA_/)) {
+            window.open(link.href, '_blank');
+        }
+}
