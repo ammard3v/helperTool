@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Merger | Combine Photos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="merge.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #4361ee;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: #3a56d4;
+            transform: translateX(-3px);
+        }
+
+        .content-container {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content-container">
+        <button class="back-button" onclick="window.location.href='index.html'">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+
+        <h1>Merge Images</h1>
+        <p class="description">Combine two images into one beautiful composition</p>
+
+        <div class="merge-controls">
+            <div class="merge-options">
+                <label for="mergeDirection">Merge Direction:</label>
+                <select id="mergeDirection">
+                    <option value="horizontal">Horizontal (Side-by-Side)</option>
+                    <option value="vertical">Vertical (Top-Bottom)</option>
+                </select>
+            </div>
+            <button id="runButton" class="btn run-btn">
+                <i class="fas fa-play"></i>
+                Preview
+            </button>
+        </div>
+
+        <div class="uploaded-files-header" id="uploadedFilesHeader">
+            <span id="header-file1"></span>
+            <span id="header-file2"></span>
+        </div>
+
+        <div class="file-inputs" id="fileInputsContainer">
+            <div class="file-input-container" id="fileContainer1">
+                <label for="img1" class="file-input-label">
+                    <i class="fas fa-image upload-icon"></i>
+                    <h3>First Image</h3>
+                    <p class="upload-text">Click to upload</p>
+                    <div class="file-info" id="file1-info"></div>
+                    <div class="file-preview-container" id="imagePreview1">
+                        <img id="previewImage1" src="" alt="Preview">
+                    </div>
+                </label>
+                <input type="file" id="img1" accept="image/*" />
+            </div>
+
+            <div class="file-input-container" id="fileContainer2">
+                <label for="img2" class="file-input-label">
+                    <i class="fas fa-image upload-icon"></i>
+                    <h3>Second Image</h3>
+                    <p class="upload-text">Click to upload</p>
+                    <div class="file-info" id="file2-info"></div>
+                    <div class="file-preview-container" id="imagePreview2">
+                        <img id="previewImage2" src="" alt="Preview">
+                    </div>
+                </label>
+                <input type="file" id="img2" accept="image/*" />
+            </div>
+        </div>
+
+        <div class="preview-placeholder" id="previewPlaceholder">
+            <i class="fas fa-images"></i>
+            <h3>Your merged image will appear here</h3>
+            <p>Upload two images to see the result</p>
+        </div>
+
+        <div class="canvas-container" id="canvasBox">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="buttons">
+            <button id="saveButton">
+                <i class="fas fa-download"></i>
+                Save Image
+            </button>
+            <button id="clearButton" class="secondary">
+                <i class="fas fa-trash-alt"></i>
+                Clear All
+            </button>
+        </div>
+    </div>
+
+    <script src="merge.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,282 @@
+:root {
+    --primary-color: #4361ee;
+    --primary-dark: #3a56d4;
+    --light-color: #f8f9fa;
+    --dark-color: #212529;
+    --gray-color: #6c757d;
+    --border-radius: 12px;
+    --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+.merge-controls {
+    display: flex;
+    gap: 20px;
+    margin: 0 auto 20px auto;
+
+    flex-wrap: wrap;
+    justify-content: center;
+
+    max-width: 600px;
+
+}
+
+.merge-options {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+
+    text-align: center;
+
+}
+
+.merge-options label {
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+    width: 100%;
+
+}
+
+.merge-options select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+
+    max-width: 220px;
+
+}
+
+.merge-options select:hover {
+    border-color: #999;
+}
+
+.merge-options select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+
+@media (max-width: 600px) {
+    .merge-controls {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+
+    }
+
+    .merge-options {
+        width: 100%;
+
+    }
+
+    .merge-options select {
+        max-width: 100%;
+
+    }
+}
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+.content-container {
+    text-align: center;
+    width: 90%;
+    max-width: 900px;
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    margin: 2rem 0;
+    position: relative;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.back-button:hover {
+    color: var(--primary-dark);
+    transform: translateX(-3px);
+}
+
+h1 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 2rem;
+    padding: 0 2rem;
+}
+
+.file-input-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+}
+
+.file-input-label {
+    display: block;
+    padding: 1.5rem;
+    background-color: var(--light-color);
+    border: 2px dashed #b8b8b8;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.file-input-label:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(67, 97, 238, 0.05);
+}
+
+.file-input-label i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.file-input-label h3 {
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+}
+
+.upload-text {
+    display: block;
+    color: var(--gray-color);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+button {
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button.secondary {
+    background-color: white;
+    color: var(--dark-color);
+    border: 1px solid #ddd;
+}
+
+button.secondary:hover {
+    background-color: var(--light-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+.btn.run-btn {
+    background-color: var(--primary-color);
+}
+
+.btn.run-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+.file-info {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.status {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    background-color: var(--light-color);
+    color: var(--dark-color);
+}
+
+@media (max-width: 768px) {
+    .content-container {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+        justify-content: center;
+    }
+}
