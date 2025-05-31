@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .content-container {
+            text-align: center;
+            width: 90%;
+            max-width: 900px;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        h1 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 2rem;
+        }
+
+        .description {
+            margin-bottom: 2rem;
+            color: var(--gray-color);
+            font-size: 1rem;
+        }
+
+        .file-input-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+        }
+
+        .file-input-label {
+            display: block;
+            padding: 1.5rem;
+            background-color: var(--light-color);
+            border: 2px dashed #b8b8b8;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .file-input-label:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+
+        .file-input-label i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .file-input-label h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        .upload-text {
+            display: block;
+            transition: var(--transition);
+        }
+
+        input[type="file"] {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 0.8rem 1.8rem;
+            font-size: 1rem;
+            font-weight: 500;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+
+        button:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .file-info {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background-color: var(--light-color);
+        }
+
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="content-container">
+        <h1>Stack PDF Pages Vertically</h1>
+
+        <div class="file-input-container">
+            <label for="pdf-upload" class="file-input-label">
+                <i class="fas fa-file-pdf"></i>
+                <h3>PDF File</h3>
+                <p class="upload-text" id="upload-text">Click to upload your multi-page PDF</p>
+                <div class="file-info" id="file-info"></div>
+                <div class="file-info" id="page-count"></div>
+            </label>
+            <input type="file" id="pdf-upload" accept="application/pdf">
+        </div>
+
+        <div class="buttons">
+            <button id="process-btn" disabled>
+                <i class="fas fa-layer-group"></i>
+                Stack Pages
+            </button>
+        </div>
+
+        <div class="status" id="status">Select a PDF file to begin</div>
+    </div>
+
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
+    <script>
+        const fileInput = document.getElementById('pdf-upload');
+        const processBtn = document.getElementById('process-btn');
+        const status = document.getElementById('status');
+        const fileInfo = document.getElementById('file-info');
+        const pageCount = document.getElementById('page-count');
+        const uploadText = document.getElementById('upload-text');
+
+        fileInput.addEventListener('change', async () => {
+            if (fileInput.files.length) {
+                const file = fileInput.files[0];
+                fileInfo.textContent = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`;
+                uploadText.style.display = 'none'; // Hide the upload text
+
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+                    const pages = pdfDoc.getPageCount();
+                    pageCount.textContent = `${pages} page${pages !== 1 ? 's' : ''}`;
+                    processBtn.disabled = false;
+                    status.textContent = "Ready to process";
+                } catch (error) {
+                    status.textContent = "Error reading PDF: " + error.message;
+                    uploadText.style.display = 'block'; // Show again if error
+                }
+            } else {
+                uploadText.style.display = 'block'; // Show again if no file
+            }
+        });
+
+        processBtn.addEventListener('click', async () => {
+            try {
+                processBtn.disabled = true;
+                status.textContent = "Processing PDF...";
+
+                const file = fileInput.files[0];
+                const arrayBuffer = await file.arrayBuffer();
+                const originalPdf = await PDFLib.PDFDocument.load(arrayBuffer);
+                const outputPdf = await PDFLib.PDFDocument.create();
+                const totalPages = originalPdf.getPageCount();
+
+                for (let i = 0; i < totalPages; i += 2) {
+                    const pagesToCopy = [];
+                    if (i < totalPages) pagesToCopy.push(i);
+                    if (i + 1 < totalPages) pagesToCopy.push(i + 1);
+
+                    const copiedPages = await outputPdf.copyPages(originalPdf, pagesToCopy);
+                    const page1 = copiedPages[0];
+                    const page2 = copiedPages[1] || null;
+
+                    const width = page1.getWidth();
+                    const height = page1.getHeight();
+                    const stackedPage = outputPdf.addPage([width, height * 2]);
+
+                    const embedPage1 = await outputPdf.embedPage(page1);
+                    stackedPage.drawPage(embedPage1, {
+                        x: 0,
+                        y: height,
+                        width: width,
+                        height: height
+                    });
+
+                    if (page2) {
+                        const embedPage2 = await outputPdf.embedPage(page2);
+                        stackedPage.drawPage(embedPage2, {
+                            x: 0,
+                            y: 0,
+                            width: width,
+                            height: height
+                        });
+                    } else {
+                        stackedPage.drawRectangle({
+                            x: 0,
+                            y: 0,
+                            width: width,
+                            height: height,
+                            borderColor: PDFLib.rgb(1, 1, 1),
+                            borderWidth: 0,
+                            color: PDFLib.rgb(1, 1, 1)
+                        });
+                    }
+                }
+
+                const pdfBytes = await outputPdf.save();
+                download(pdfBytes, "stacked_pages.pdf", "application/pdf");
+
+                status.textContent = "Success! Your stacked PDF is downloading.";
+                processBtn.innerHTML = '<i class="fas fa-check"></i> Done!';
+            } catch (error) {
+                status.textContent = "Error: " + error.message;
+                processBtn.disabled = false;
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>
